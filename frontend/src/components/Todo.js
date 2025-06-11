@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 
 function Todo() {
     const [todoList, setTodoList] = useState([]);
@@ -71,12 +72,13 @@ function Todo() {
         // Updating edited data to the database through updateById API
         axios.post('http://127.0.0.1:3001/updateTodoList/' + id, editedData)
             .then(result => {
+                toast("Task edited successfully!")
                 console.log(result);
                 setEditableId(null);
                 setEditedTask("");
                 setEditedStatus("");
                 setEditedDeadline(""); // Clear the edited deadline
-                window.location.reload();
+                setTimeout(()=>window.location.reload(), 3000);
             })
             .catch(err => console.log(err));
     }
@@ -160,9 +162,12 @@ function Todo() {
                                                         Save
                                                     </button>
                                                 ) : (
-                                                    <button className="btn btn-primary btn-sm" onClick={() => toggleEditable(data._id)}>
-                                                        Edit
-                                                    </button>
+                                                    <>
+                                                        <button className="btn btn-primary btn-sm" onClick={() => toggleEditable(data._id)}>
+                                                            Edit
+                                                        </button>
+                                                        <ToastContainer/>
+                                                    </>
                                                 )}
                                                 <button className="btn btn-danger btn-sm ml-1" onClick={() => deleteTask(data._id)}>
                                                     Delete
