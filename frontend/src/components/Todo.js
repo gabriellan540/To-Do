@@ -83,15 +83,19 @@ function Todo() {
 
 
     // Delete task from database
+
     const deleteTask = (id) => {
-        axios.delete('http://127.0.0.1:3001/deleteTodoList/' + id)
-            .then(result => {
-                console.log(result);
-                window.location.reload();
-            })
-            .catch(err =>
-                console.log(err)
-            )
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm("Do you want to delete this task?") === true) {
+            axios.delete('http://127.0.0.1:3001/deleteTodoList/' + id)
+                .then(result => {
+                    console.log(result);
+                    window.location.reload();
+                })
+                .catch(err =>
+                    console.log(err)
+                )
+        }
     }
 
     return (
